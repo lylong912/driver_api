@@ -76,7 +76,7 @@ class UserController extends Controller
         //custom pin
         $pin =1234;
         //insert data into db
-        $user = User::where('phone', $request->phone)->first();
+        
         if(User::where('phone', $request->phone)->first())
         {
             return response()->json(array('message'=>'User has already registered'),400);
@@ -88,6 +88,7 @@ class UserController extends Controller
             'email'=>$request->input('email'),
             'phone'=>$request->input('phone'),
             'otp_time'=>$otp_time,
+            'user_type'=>'driver',
             'verify_status'=>'completed',
             'password'=>Hash::make($request->input('password')),
             'otp'=>Hash::make($pin)
@@ -104,10 +105,10 @@ class UserController extends Controller
             //         ['from' => $twilio_number, 'body' => $message] );
             // return response($pin);
                     // return response(array("message"=>"Register success, please enter the otp that sent to your mobile number"),201);
-            
-            $token = $user->createToken($request->phone)->plainTextToken;
+            $user = User::where('phone', $request->input('phone'))->first();
+            $token = $user->createToken($user->phone)->plainTextToken;
             $response = array(
-                'user'=>$userregister,
+                'user'=>$user,
                 'token'=>$token
             );
         
@@ -292,7 +293,6 @@ class UserController extends Controller
             $token = $newUser->createToken($newUser->email)->plainTextToken;
             $response = array(
                 'user'=>$newUser,
-            
                 'token'=>$token
             );
             return response()->json($response,200);
@@ -512,8 +512,8 @@ class UserController extends Controller
             return response($pin);
             return response(array("message"=>"Register success, please enter the otp that sent to your mobile number"),201);
            
-            $user = User::where('phone', $request->phone)->first();
-            $token = $user->createToken($request->phone)->plainTextToken;
+            $user = User::where('phone', $request->input('phone'))->first();
+            $token = $user->createToken($user->phone)->plainTextToken;
             $response = array(
                 'user'=>$user,
                 'token'=>$token

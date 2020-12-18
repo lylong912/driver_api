@@ -19,7 +19,6 @@ class CheckoutController extends Controller
             {
                 return response()->json(['message'=>'please verified'],401);
             }
-            $server = "http://mx.anakutjobs.com/assets/uploads/";
             //get current user
             $current_user =  auth()->user();
             $checkout = DB::table('sma_checkout')->orderBy('id','DESC')->where('customer_id',$current_user->id)->get();
@@ -41,33 +40,7 @@ class CheckoutController extends Controller
             ->where('customer_id','=', $current_user->id)
              ->where('id','=', $id)
             ->first();
-            
-            // foreach($checkout as $checkouts)
-            // {
-            //     for($i = 0;$i<count($checkout[0]->data);$i++)
-            //     {
-            //         $product_id = $checkout[0]->data[$i]['product_id'];
-            //         $products = Product::orderBy('id','DESC')->with(['Photos'])->select('id','code','name','price','category_id'
-            //         ,'subcategory_id','image','product_details')->where('id','=', $product_id)
-            //         ->get();
-
-                    
-            //         foreach($products as $product)
-            //         {
-            //             //custom data for product
-            //             $checkout[0]->data[$i]['grand_total'] = $checkout[0]->data[$i]['price']*$checkout[0]->data[$i]['quantity'];
-
-            //             if($product->image!="")
-            //         {
-            //             $product->image = $this->server.$product->image;
-            //         }
-            //         }
-                    
-            //         // $checkout[0]->data[$i]->product = $products;
-            //     }
-            // }
-               
-                
+             
             return response()->json($checkout);
             
            
