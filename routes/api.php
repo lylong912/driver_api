@@ -81,9 +81,10 @@ Route::post('profile/location/{id}', 'App\Http\Controllers\UserController@select
 Route::get('profile', 'App\Http\Controllers\UserController@getProfile');
 Route::put('profile/update', 'App\Http\Controllers\UserController@updateProfile');
 //checkout route
-Route::post('checkout', 'App\Http\Controllers\CheckoutController@Checkout');
-Route::get('checkout/history', 'App\Http\Controllers\CheckoutController@getCheckout');
-Route::get('checkout/history/detail/{id}', 'App\Http\Controllers\CheckoutController@getCheckoutDetails');
+// Route::post('order', 'App\Http\Controllers\CheckoutController@Checkout');
+Route::get('order/detail', 'App\Http\Controllers\OrderController@getOrderDetail');
+Route::get('order/detail/delivery', 'App\Http\Controllers\OrderController@needToDelivery');
+Route::get('order/detail/pickup', 'App\Http\Controllers\OrderController@needToPickup');
 
 //cart route
 Route::put('cart/update/{id}', 'App\Http\Controllers\CartController@updateCart');

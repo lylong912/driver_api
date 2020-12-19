@@ -105,7 +105,7 @@ class UserController extends Controller
             //         ['from' => $twilio_number, 'body' => $message] );
             // return response($pin);
                     // return response(array("message"=>"Register success, please enter the otp that sent to your mobile number"),201);
-            $user = User::where('phone', $request->input('phone'))->first();
+            $user = User::where('phone', $request->phone)->first();
             $token = $user->createToken($user->phone)->plainTextToken;
             $response = array(
                 'user'=>$user,
@@ -560,7 +560,7 @@ class UserController extends Controller
             // // return response($pin);
             //         // return response(array("message"=>"Register success, please enter the otp that sent to your mobile number"),201);
             $user = User::where('phone', $request->phone)->first();
-            $token = $user->createToken($request->phone)->plainTextToken;
+            $token = $user->createToken($user->phone)->plainTextToken;
             $response = array(
                 'user'=>$user,
                 'token'=>$token
